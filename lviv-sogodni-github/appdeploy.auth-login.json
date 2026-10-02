@@ -1,0 +1,14 @@
+{
+  "methods": ["google", "apple", "x", "email"],
+  "headline": "Увійти до редакції",
+  "subtitle": "Авторизація для керування матеріалами «Львів Сьогодні»",
+  "style": {
+    "mode": "light",
+    "accentColor": "#2563eb",
+    "backgroundColor": "#f8fafc",
+    "panelColor": "#ffffff",
+    "textColor": "#0f172a",
+    "fontFamily": "Inter, system-ui, sans-serif",
+    "borderRadius": 16
+  }
+}
