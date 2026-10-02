@@ -1,4 +1,12 @@
-export type Article = {
+import {
+  listArticles,
+  countArticles,
+  insertArticle,
+  updateArticle,
+  deleteArticle,
+  toArticle,
+  fromArticle,
+} from './supabase';export type Article = {
   id: string; title: string; excerpt: string; category: string; author: string;
   publishedAt: string; body: string; status: "published"|"draft"; featured?: boolean;
   tags?: string[]; slug: string; imageUrl?: string; seoTitle?: string; seoDescription?: string;
@@ -27,8 +35,23 @@ export const seedArticles: Article[] = [
   {id:"20",title:"Львівські комунальники демонтували ще один кіоск біля нового ЦУМу",excerpt:"У центральній частині Львова продовжують впорядкування тимчасових споруд.",category:"Інфраструктура",author:"Редакція",publishedAt:"2026-10-01T14:47:00+03:00",body:"Львівські комунальники демонтували ще один кіоск біля нового ЦУМу.\\n\\nДжерело: місцеві медіа.",status:"published",tags:["Львів","комунальні служби"],slug:"lviv-demontazh-kiosku-cum-2026"}
 ];
 
-let memoryArticles = [...seedArticles];
+export async function getArticles(includeDrafts = true): Promise<Article[]> {
+  const rows = await listArticles(includeDrafts);
+  return rows.map(toArticle);
+}
 
-export function getArticles() { return memoryArticles; }
-export function setArticles(v: Article[]) { memoryArticles = v; }
-export function nextId() { return String(Date.now()); }
+export async function setArticles(v: Article[]): Promise<void> {
+  const current = await listArticles(true);
+
+  for (const article of current) {
+    await deleteArticle(String(article.id));
+  }
+
+  for (const article of v) {
+    await insertArticle(fromArticle(article));
+  }
+}
+
+export async function nextId(): Promise<string> {
+  return String(Date.now());
+}
