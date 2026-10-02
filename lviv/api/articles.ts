@@ -1,7 +1,7 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node';
-import { countArticles, deleteArticle, fromArticle, insertArticle, insertArticles, listArticles, toArticle, updateArticle } from '../lib/supabase';
-import { validToken } from '../lib/auth';
-import { seedArticles } from '../lib/news';
+import { countArticles, deleteArticle, fromArticle, insertArticle, insertArticles, listArticles, toArticle, updateArticle } from '../lib/supabase.js';
+import { validToken } from '../lib/auth.js';
+import { seedArticles } from '../lib/news.js';
 
 const isAdmin = (req: VercelRequest) => validToken(req.headers.authorization?.replace(/^Bearer\s+/i, ''));
 
